@@ -17,7 +17,6 @@ public class SalaryTransformation {
                                         .collect(Collectors.toList());
 
         updated.forEach(salary -> System.out.print(salary + " "));
-
         sc.close();
     }
 }
