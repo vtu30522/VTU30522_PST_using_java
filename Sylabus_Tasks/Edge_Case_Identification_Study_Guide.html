@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edge Case Identification for Students - Comprehensive Guide</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 0 24px;
+      color: #1f2328;
+      background-color: #ffffff;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #0969da;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    h1 { color: #0969da; margin: 0; font-size: 28px; }
+    h2 { color: #1f2328; border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 36px; }
+    h3 { color: #24292f; margin-top: 20px; }
+    .print-btn {
+      padding: 10px 18px;
+      background-color: #0969da;
+      color: white;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+    .print-btn:hover { background-color: #0856b3; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    th, td {
+      border: 1px solid #d0d7de;
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+    }
+    tr:nth-child(even) { background-color: #fbfcfd; }
+    code {
+      background-color: #eff1f3;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      color: #0969da;
+    }
+    pre {
+      background-color: #f6f8fa;
+      padding: 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      border: 1px solid #d0d7de;
+    }
+    pre code { background-color: transparent; padding: 0; color: #1f2328; }
+    blockquote {
+      border-left: 4px solid #0969da;
+      margin: 16px 0;
+      padding: 10px 18px;
+      background-color: #ddf4ff;
+      color: #0969da;
+      border-radius: 0 6px 6px 0;
+    }
+    .badge-edge {
+      background-color: #fff8c5;
+      color: #9a6700;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .badge-invalid {
+      background-color: #ffebe9;
+      color: #cf222e;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    .badge-normal {
+      background-color: #dafbe1;
+      color: #1a7f37;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+    ul, ol { padding-left: 24px; }
+    li { margin-bottom: 6px; }
+    @media print {
+      .print-btn { display: none; }
+      body { margin: 0; padding: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div>
+      <h1>Edge Case Identification for Students</h1>
+      <p style="margin: 4px 0 0; color: #57609a;">Spot the tricky inputs before they break your program!</p>
+    </div>
+    <button class="print-btn" onclick="window.print()">Download / Print PDF</button>
+  </div>
+
+  <h2>1. Introduction: What is an Edge Case?</h2>
+  <p>An <strong>Edge Case</strong> is an input at the very boundary limit (or just outside) of what a software program expects to handle.</p>
+  <blockquote><strong>Core Rule:</strong> Bugs love to hide at the edges! Most programmers test ordinary inputs, but programs usually crash when fed extreme, boundary, empty, or unexpected values.</blockquote>
+  <p>Edge cases live at the very edges: the smallest, the largest, the first, the last, or nothing at all.</p>
+
+  <h3>Everyday Metaphor: The Lift (Max 8 People)</h3>
+  <ul>
+    <li><strong>0 People:</strong> Empty lift (Special edge case: Should it travel? Does it enter standby mode?)</li>
+    <li><strong>1 to 7 People:</strong> Everyday rides (Normal zone: works as planned).</li>
+    <li><strong>8 People:</strong> Exactly full (Limit edge case: Maximum capacity reached, but still permitted).</li>
+    <li><strong>9+ People:</strong> Overload (Out of boundary: Alarm rings, doors stay open, refuses to move).</li>
+  </ul>
+
+  <h2>2. Normal Zone vs. Edge Cases vs. Invalid Range</h2>
+  <p>Rule: Examination marks must be between <strong>0 and 100</strong>.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Zone</th>
+        <th>Input Values</th>
+        <th>Description</th>
+        <th>Expected System Behavior</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge-invalid">Too Low (Invalid)</span></td>
+        <td><code>-1</code>, <code>-50</code></td>
+        <td>Strictly lower than allowed minimum</td>
+        <td><strong>Reject</strong> with error validation</td>
+      </tr>
+      <tr>
+        <td><span class="badge-edge">Lower Edge</span></td>
+        <td><code>0</code>, <code>1</code></td>
+        <td>Right on the boundary and immediately inside</td>
+        <td><strong>Accept</strong></td>
+      </tr>
+      <tr>
+        <td><span class="badge-normal">Normal Zone</span></td>
+        <td><code>2</code> to <code>98</code></td>
+        <td>Everyday typical inputs (e.g., 50, 75)</td>
+        <td><strong>Accept</strong></td>
+      </tr>
+      <tr>
+        <td><span class="badge-edge">Upper Edge</span></td>
+        <td><code>99</code>, <code>100</code></td>
+        <td>Immediately inside and exactly on the maximum</td>
+        <td><strong>Accept</strong></td>
+      </tr>
+      <tr>
+        <td><span class="badge-invalid">Too High (Invalid)</span></td>
+        <td><code>101</code>, <code>200</code></td>
+        <td>Strictly higher than allowed maximum</td>
+        <td><strong>Reject</strong> with error validation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Why Should We Care? (Real-World Failures)</h2>
+  <p>When edge cases are missed, applications fail in unexpected and costly ways:</p>
+  <ul>
+    <li><strong>Shopping App:</strong> Quantity set to <code>0</code> or negative. <em>Result:</em> An order for 0 items is placed, or cost is subtracted from the total.</li>
+    <li><strong>Video Game:</strong> Score exceeds maximum integer capacity. <em>Result:</em> Integer overflow flips score to negative numbers (<code>-2,147,483,648</code>).</li>
+    <li><strong>Registration Form:</strong> Age field filled with <code>-5</code>. <em>Result:</em> Form accepts a negative age, corrupting database records.</li>
+  </ul>
+
+  <h2>4. Boundary Value Testing: "Below, On, Above"</h2>
+  <p>At every boundary limit, test three specific locations:</p>
+  <ol>
+    <li><strong>Just Below:</strong> One step under the boundary</li>
+    <li><strong>Exactly On:</strong> Right on the limit line</li>
+    <li><strong>Just Above:</strong> One step over the boundary</li>
+  </ol>
+  <p><strong>Applying to Marks (0 to 100):</strong></p>
+  <ul>
+    <li><code>-1</code> (Just below lower boundary) &rarr; <span class="badge-invalid">Reject</span></li>
+    <li><code>0</code> (On lower boundary) &rarr; <span class="badge-edge">Accept</span></li>
+    <li><code>1</code> (Just inside lower boundary) &rarr; <span class="badge-edge">Accept</span></li>
+    <li><code>50</code> (Middle normal value) &rarr; <span class="badge-normal">Accept</span></li>
+    <li><code>99</code> (Just inside upper boundary) &rarr; <span class="badge-edge">Accept</span></li>
+    <li><code>100</code> (On upper boundary) &rarr; <span class="badge-edge">Accept</span></li>
+    <li><code>101</code> (Just above upper boundary) &rarr; <span class="badge-invalid">Reject</span></li>
+  </ul>
+
+  <h2>5. The "Sneaky Five" Inputs Checklist</h2>
+  <p>Whenever you test any input or function, always evaluate these 5 scenarios:</p>
+  <ol>
+    <li><strong>Empty (<code>""</code>, <code>null</code>, <code>[]</code>):</strong> Nothing typed or empty list.</li>
+    <li><strong>Zero (<code>0</code>):</strong> Can we divide by it? Does it cause division by zero?</li>
+    <li><strong>Negative (<code>-1</code>):</strong> Values less than zero when only positive is sensible.</li>
+    <li><strong>Huge / Maximum (<code>MAX_VALUE</code>):</strong> Large numbers or huge text that cause memory or integer overflow.</li>
+    <li><strong>Wrong Type (<code>"abc"</code>):</strong> Text entered where numbers are expected.</li>
+  </ol>
+
+  <h2>6. Java Code Example: An Edge Case Bug</h2>
+  <h3>Buggy Code:</h3>
+<pre><code>int[] marks = {};   // Edge case: Empty array!
+int sum = 0;
+for (int m : marks) {
+    sum += m;
+}
+// marks.length is 0 -> Evaluates 0 / 0!
+int avg = sum / marks.length; // CRASH: ArithmeticException: / by zero!
+</code></pre>
+
+  <h3>The Fix:</h3>
+<pre><code>// Always handle the edge case before dividing:
+if (marks.length == 0) {
+    return 0;
+}
+int avg = sum / marks.length;
+return avg;
+</code></pre>
+
+  <h2>7. The 4-Step "Edge Detective" Methodology</h2>
+  <ol>
+    <li><strong>Step 1: Read the Rule:</strong> What values are allowed? (e.g., 1 to 10)</li>
+    <li><strong>Step 2: Find the Limits:</strong> Identify the smallest and biggest permitted values (1 and 10).</li>
+    <li><strong>Step 3: Pick Tests:</strong> Select values below, on, and above each limit (0, 1, 10, 11).</li>
+    <li><strong>Step 4: Run and Fix:</strong> Test the code, patch any crashes, and retest.</li>
+  </ol>
+
+  <h2>8. Hands-on Practice: Password Rule (6 to 12 Characters)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Password Length</th>
+        <th>Category</th>
+        <th>Expected Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>0</code> (Empty)</td>
+        <td><span class="badge-edge">Edge Case</span></td>
+        <td>Reject (Must not be blank)</td>
+      </tr>
+      <tr>
+        <td><code>5</code></td>
+        <td><span class="badge-edge">Edge Case (Just below)</span></td>
+        <td>Reject (Too short)</td>
+      </tr>
+      <tr>
+        <td><code>6</code></td>
+        <td><span class="badge-edge">Edge Case (On limit)</span></td>
+        <td>Accept</td>
+      </tr>
+      <tr>
+        <td><code>8</code></td>
+        <td><span class="badge-normal">Normal Zone</span></td>
+        <td>Accept</td>
+      </tr>
+      <tr>
+        <td><code>12</code></td>
+        <td><span class="badge-edge">Edge Case (On limit)</span></td>
+        <td>Accept</td>
+      </tr>
+      <tr>
+        <td><code>13</code></td>
+        <td><span class="badge-edge">Edge Case (Just above)</span></td>
+        <td>Reject (Too long)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>9. Quick Quiz & Knowledge Check</h2>
+  <ul>
+    <li><strong>Q1:</strong> Pizza orders allow 1 to 10. Which tests are edge cases? &rarr; <em>Answers: 0, 1, 10, 11.</em></li>
+    <li><strong>Q2:</strong> A list of student marks is empty. What error occurs? &rarr; <em>Divide by zero (ArithmeticException).</em></li>
+    <li><strong>Q3:</strong> An age box allows 1 to 120. Is 0 a normal test? &rarr; <em>No, it is a boundary edge case.</em></li>
+    <li><strong>Q4:</strong> Typing "abc" in a number box is what kind of test? &rarr; <em>Wrong type (part of the Sneaky Five).</em></li>
+  </ul>
+
+</body>
+</html>
